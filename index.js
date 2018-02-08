@@ -3,7 +3,7 @@
     var chatArea = domIdTraverser("chatArea");
     var inputMsg = domIdTraverser("inputMsg");
     var sendBtn = domIdTraverser("sendBtn");
-    var qaObj, index = 0;
+    var qaObj, index = 0, slideIndex;
 
     sendBtn.addEventListener("click", addQuestionAnswer);
     
@@ -35,8 +35,6 @@
         addQuestionAnswer(null, questions[index]);
     }
 
-
-
     function addQuestionAnswer(evt, text, type, link) {
         if(evt) {
             evt.preventDefault();
@@ -47,12 +45,14 @@
             chatArea.innerHTML = `${chatAreaInnerHTML}
                                 <div class="text-div">
                                     <div class="bot-text">${text}</div>
+                                    <div class="clearfix"></div>
                                 </div>`;
         }
         else if (evt && !text && inputMsg.value) {
             chatArea.innerHTML = `${chatAreaInnerHTML}
                                 <div class="text-div">
                                     <div class="user-text">${inputMsg.value}</div>
+                                    <div class="clearfix"></div>
                                 </div>`;
             processInput(inputMsg.value);
             inputMsg.value = '';
@@ -65,26 +65,56 @@
                                             src="${link}" frameborder="0" allowfullscreen>
                                         </iframe>
                                     </div>
+                                    <div class="clearfix"></div>
                                 </div>`;
         }
         else if (type === "carousel") {
             var carouselWrapper = document.createElement('div');
-            carouselWrapper.classList.add('carousel-wrapper');
-            var carouselWrapperInnerHTML = carouselWrapper.InnerHTML;
             link.forEach((imageLink, idx) => {
-                carouselWrapper.InnerHTML = `${carouselWrapperInnerHTML}
+                carouselWrapper.innerHTML = `${carouselWrapper.innerHTML}
                                                 <div class="slide ${idx}">
                                                     <img src="${imageLink}" style="width:100%">
                                                 </div>`;
             });
+            carouselWrapper.innerHTML = `${carouselWrapper.innerHTML}
+                                            <span id="prevBtn" class="prev-btn">&#10094;</span>
+                                            <span id="nextBtn" class="next-btn">&#10095;</span>`;
 
             chatArea.innerHTML = `${chatAreaInnerHTML}
                                 <div class="text-div">
-                                    ${carouselWrapper.InnerHTML}
+                                    <div class="carousel-wrapper">
+                                        ${carouselWrapper.innerHTML}
+                                    </div>
+                                    <div class="clearfix"></div>
                                 </div>`;
+
+            slideIndex = 1;
+            showSlides(slideIndex);
+
+            var prevBtn = domIdTraverser("prevBtn");
+            var nextBtn = domIdTraverser("nextBtn");
+
+            prevBtn.addEventListener("click",() => {
+                showSlides(slideIndex += -1);
+            });
+
+            nextBtn.addEventListener("click",() => {
+                showSlides(slideIndex += 1);
+            });
+                                
         }
     }
 
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("slide");
+        if (n > slides.length) {slideIndex = 1} 
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none"; 
+        }
+        slides[slideIndex-1].style.display = "block"; 
+    }
 
 
     function processInput(inputVal){
