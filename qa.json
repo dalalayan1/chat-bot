@@ -31,8 +31,14 @@
                 "I recommend you use dove {recommendedShampoo} shampoo"
             ],
             "media": {
-                "type": "image",
-                "link": "https://www.youtube.com/embed/wsoN2C0JzWk"
+                "type": "carousel",
+                "link": [
+                    "./img/dandruff.jpg",
+                    "./img/hairfall.jpg",
+                    "./img/nourish-black.jpg",
+                    "./img/nourishoil.jpg",
+                    "./img/oilcare.jpg"
+                ]
             }
         },
         "other": "I'm sorry I didn't get that"

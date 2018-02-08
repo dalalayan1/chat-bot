@@ -3,14 +3,16 @@
     var chatArea = domIdTraverser("chatArea");
     var inputMsg = domIdTraverser("inputMsg");
     var sendBtn = domIdTraverser("sendBtn");
-    var qaObj;
+    var qaObj, index = 0;
 
     sendBtn.addEventListener("click", addQuestionAnswer);
+    
+
     function domIdTraverser(id) {
         return document.getElementById(id);
     }
     function loadJSON(callback) {   
-    var xobj = new XMLHttpRequest();
+        var xobj = new XMLHttpRequest();
         xobj.overrideMimeType("application/json");
         xobj.open('GET', 'qa.json', true);
         xobj.onreadystatechange = function () {
@@ -27,12 +29,13 @@
         startChat();
     }
 
-    var index = 0, listen;
     function startChat() {
         const { questions } = qaObj;
 
         addQuestionAnswer(null, questions[index]);
     }
+
+
 
     function addQuestionAnswer(evt, text, type, link) {
         if(evt) {
@@ -64,7 +67,25 @@
                                     </div>
                                 </div>`;
         }
+        else if (type === "carousel") {
+            var carouselWrapper = document.createElement('div');
+            carouselWrapper.classList.add('carousel-wrapper');
+            var carouselWrapperInnerHTML = carouselWrapper.InnerHTML;
+            link.forEach((imageLink, idx) => {
+                carouselWrapper.InnerHTML = `${carouselWrapperInnerHTML}
+                                                <div class="slide ${idx}">
+                                                    <img src="${imageLink}" style="width:100%">
+                                                </div>`;
+            });
+
+            chatArea.innerHTML = `${chatAreaInnerHTML}
+                                <div class="text-div">
+                                    ${carouselWrapper.InnerHTML}
+                                </div>`;
+        }
     }
+
+
 
     function processInput(inputVal){
         const {
@@ -73,20 +94,24 @@
                 washCheck: {
                     recommendedWashes,
                     optionalReplyArray,
-                    replyArray: replyArrayForWashCheck
+                    replyArray: replyArrayForWashCheck,
+                    media: {
+                        type: washCheckMediaType,
+                        link: washCheckMediaLinks
+                    }
                 } = {},
                 other
             } = {},
             answers
         } = qaObj;
-        const answerValue = answers[inputVal.toLowerCase()] && answers[inputVal.toLowerCase()].goToQuestion;
-
-        if(typeof answerValue === "number" && index === 0) {
+        const answerValue = answers[inputVal.toLowerCase()];
+        const goToQuestionNumber = answerValue && answerValue.goToQuestion;
+        if(typeof goToQuestionNumber === "number" && index === 0) {
             answers["hairCondition"] = inputVal;
 
-            index = answerValue;
+            index = goToQuestionNumber;
 
-            setTimeout(function() {
+            setTimeout(() => {
                 startChat();
             }, 1000);
         }
@@ -96,7 +121,7 @@
                 Array.isArray(optionalReplyArray) && optionalReplyArray.length &&
                     optionalReplyArray.forEach((eachReply, idx) => {
                         eachReply = eachReply.replace('{number}',noOfWashes).replace('{hairCondition}',hairCondition);
-                        setTimeout(function() {
+                        setTimeout(() => {
                             addQuestionAnswer(null, eachReply)
                         }, (idx+1)*1000);
                     });
@@ -105,7 +130,7 @@
                 Array.isArray(optionalReplyArray) && optionalReplyArray.length &&
                     optionalReplyArray.forEach((eachReply, idx) => {
                         eachReply = eachReply.replace('{number}',noOfWashes).replace('{hairCondition}',hairCondition);
-                        setTimeout(function() {
+                        setTimeout(() => {
                             addQuestionAnswer(null, eachReply)
                         }, (idx+1)*1000);
                     });
@@ -113,10 +138,13 @@
             Array.isArray(replyArrayForWashCheck) && replyArrayForWashCheck.length &&
                 replyArrayForWashCheck.forEach((eachReply, idx) => {
                     eachReply = eachReply.replace('{recommendedShampoo}',answers[answers["hairCondition"]].recommendedShampoo);
-                    setTimeout(function() {
+                    setTimeout(() => {
                         addQuestionAnswer(null, eachReply)
                     }, (optionalReplyArray.length+1)*1000);
                 });
+            washCheckMediaType === "carousel" && setTimeout(() => {
+                addQuestionAnswer(null, null, washCheckMediaType, washCheckMediaLinks);
+            }, (optionalReplyArray.length+replyArrayForWashCheck.length+2)*1000);
         }
         else if(typeof answerValue === "object") {
             const {
@@ -131,19 +159,19 @@
 
             Array.isArray(replyArray) && replyArray.length &&
                 replyArray.forEach((eachReply, idx) => {
-                    setTimeout(function() {
+                    setTimeout(() => {
                         addQuestionAnswer(null, eachReply)
                     }, (idx+1)*1000);
                 });
-            type === "video" && setTimeout(function() {
+            type === "video" && setTimeout(() => {
                     addQuestionAnswer(null, null, type, link);
                 }, (replyArray.length+1)*1000);
         }
         else {
-            setTimeout(function() {
+            setTimeout(() => {
                 addQuestionAnswer(null, other);
             }, 1000);
-            setTimeout(function() {
+            setTimeout(() => {
                 startChat();
             }, 2000);
         }
