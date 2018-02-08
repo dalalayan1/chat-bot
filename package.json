@@ -1,0 +1,14 @@
+{
+  "name": "chat-bot",
+  "version": "1.0.0",
+  "description": "A dummy chat-bot to show the working of a chat-bot. It uses a pre-defined set of QnA.",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install -g lite-server",
+    "start": "lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Ayan Dalal <dalalayan1@gmail.com>",
+  "license": "ISC"
+}

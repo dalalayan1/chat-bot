@@ -1,0 +1,40 @@
+.wrapper {
+    height: 500px;
+    width: 320px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ddd;
+}
+.chat-area {
+    height: 90%;
+    overflow-y: scroll;
+}
+.text-div {
+    width: 100%;
+    min-height: 30px;
+    padding: 10px 0;
+    clear: both;
+}
+.bot-text,
+.user-text {
+    min-height: 20px;
+    max-width: 60%;
+    padding: 10px 40px;
+    border-radius: 20px;
+}
+.bot-text {
+    background: navy;
+    color: white;
+    float: right;
+}
+.user-text {
+    background: white;
+    color: navy;
+    float: left;
+}
+.input-area {
+    position: absolute;
+    bottom: 10px;
+    width: 320px;
+}

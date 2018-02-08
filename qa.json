@@ -1,0 +1,40 @@
+{
+    "questions": {
+        "0": "Hi, it is {temperature} degress outside in {cityName}. How is your hair feeling?",
+        "1": "How many times do you wash your hair?"
+    },
+    "answers": {
+        "oily": {
+            "goToQuestion": 1,
+            "recommendedShampoo": "Oil Control"
+        },
+        "dull": {
+            "goToQuestion": 1,
+            "recommendedShampoo": "Daily Shine"
+        },
+        "good": {
+            "replyArray": [
+                "That is great!",
+                "I recommend you use dove oxygen moisture for even better results."
+            ],
+            "media": {
+                "type": "video",
+                "link": "https://www.youtube.com/embed/wsoN2C0JzWk"
+            }
+        },
+        "washCheck": {
+            "recommendedWashes": 7,
+            "optionalReplyArray": [
+                "Washing your hair {number} times per week when it is {hairCondition} is not healthy"
+            ],
+            "replyArray": [
+                "I recommend you use dove {recommendedShampoo} shampoo"
+            ],
+            "media": {
+                "type": "image",
+                "link": "https://www.youtube.com/embed/wsoN2C0JzWk"
+            }
+        },
+        "other": "I'm sorry I didn't get that"
+    }
+}
