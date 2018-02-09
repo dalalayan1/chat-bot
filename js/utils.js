@@ -1,17 +1,6 @@
 
 const CHATBOT_OBJ = {
 
-    showSlides: function(n, slideIndex) {
-        var i;
-        var slides = domTraverser("slide", true);
-        if (n > slides.length) {slideIndex = 1} 
-        if (n < 1) {slideIndex = slides.length}
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none"; 
-        }
-        slides[slideIndex-1].style.display = "block"; 
-    },
-
     domTraverser: function(selector, isClass) {
         if (isClass) {
             return document.getElementsByClassName(selector);
@@ -61,14 +50,33 @@ const CHATBOT_OBJ = {
             }
         };
         xobj.send(null);
+    },
+
+    scrollToBottom: function(elementArray) {
+
+        const elementArrayLength = elementArray.length;
+        elementArray[elementArrayLength-1].scrollIntoView();
+    },
+
+    showSlides: function(n, slideIndex) {
+        var i;
+        var slides = domTraverser("slide", true);
+        if (n > slides.length) {slideIndex = 1} 
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none"; 
+        }
+        slides[slideIndex-1].style.display = "block"; 
     }
+
 }
 
 
-const { domTraverser, domELementCreator, fetchData, showSlides } = CHATBOT_OBJ;
+const { domTraverser, domELementCreator, fetchData, scrollToBottom, showSlides } = CHATBOT_OBJ;
 var CHATBOT = CHATBOT || {
     domTraverser,
     domELementCreator,
     fetchData,
-    showSlides
+    showSlides,
+    scrollToBottom
 };

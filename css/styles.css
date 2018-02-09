@@ -20,13 +20,13 @@ body {
     opacity: 0;
     transition: opacity 3000ms;
 }
+.chatarea-wrapper {
+    padding-top: 80px;
+}
 .chat-area {
-    max-height: 80vh;
+    max-height: 67vh;
     width: 100vw;
     overflow-y: scroll;
-}
-.text-div:first-child {
-    padding-top: 110px;
 }
 .text-div {
     width: 92%;

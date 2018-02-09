@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-    const { domTraverser, domELementCreator, fetchData, showSlides } = CHATBOT,
+    const { domTraverser, domELementCreator, fetchData, scrollToBottom, showSlides } = CHATBOT,
         homeScreenContainer = domTraverser("homeScreenContainer"),
         chatAreaContainer = domTraverser("chatAreaContainer"),
         chatArea = domTraverser("chatArea"),
@@ -63,7 +63,7 @@
 
             setTimeout(() => {
                 addQuestionAnswer(null, qaObj.questions[index]);
-            }, 2000);
+            }, 1500);
         }
         else if ( typeof parseInt(inputVal) === "number" && !isNaN(inputVal) && index === 1 ) {
 
@@ -78,7 +78,7 @@
 
                         setTimeout(() => {
                             addQuestionAnswer(null, eachReply)
-                        }, (idx+1)*2000);
+                        }, (idx+1)*1500);
                     });
             }
             else if ( noOfWashes >= recommendedWashes && hairCondition === "oily" ) {
@@ -90,7 +90,7 @@
 
                         setTimeout(() => {
                             addQuestionAnswer(null, eachReply)
-                        }, (idx+1)*2000);
+                        }, (idx+1)*1500);
                     });
             }
 
@@ -101,12 +101,12 @@
 
                     setTimeout(() => {
                         addQuestionAnswer(null, eachReply)
-                    }, (optionalReplyArray.length+1)*2000);
+                    }, (optionalReplyArray.length+1)*1500);
                 });
             washCheckMediaType === "carousel" && setTimeout(() => {
 
                 addQuestionAnswer(null, null, washCheckMediaType, washCheckMediaLinks);
-            }, (optionalReplyArray.length+replyArrayForWashCheck.length+2)*2000);
+            }, (optionalReplyArray.length+replyArrayForWashCheck.length+2)*1500);
 
         }
         else if ( typeof answerValue === "object" ) {
@@ -126,23 +126,23 @@
 
                     setTimeout(() => {
                         addQuestionAnswer(null, eachReply)
-                    }, (idx+1)*2000);
+                    }, (idx+1)*1500);
                 });
 
             type === "video" && setTimeout(() => {
 
                     addQuestionAnswer(null, null, type, link);
-                }, (replyArray.length+1)*2000);
+                }, (replyArray.length+1)*1500);
         }
         else {
 
             setTimeout(() => {
                 addQuestionAnswer(null, other);
-            }, 2000);
+            }, 1500);
 
             setTimeout(() => {
                 addQuestionAnswer(null, qaObj.questions[index]);
-            }, 2000);
+            }, 1500);
         }
         
     }
@@ -334,6 +334,10 @@
             });
                                 
         }
+
+        const textDivs = document.querySelectorAll(".text-div");
+        scrollToBottom(textDivs);
+        
     }
 
 
