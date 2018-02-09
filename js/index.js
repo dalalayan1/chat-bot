@@ -1,8 +1,10 @@
 'use strict';
-var CHATBOT = CHATBOT || {};
 (function () {
     const { domTraverser, domELementCreator, fetchData, showSlides } = CHATBOT,
+        homeScreenContainer = domTraverser("homeScreenContainer"),
+        chatAreaContainer = domTraverser("chatAreaContainer"),
         chatArea = domTraverser("chatArea"),
+        inputArea = domTraverser("inputArea"),
         inputMsg = domTraverser("inputMsg"),
         sendBtn = domTraverser("sendBtn");
     let index = 0,
@@ -19,7 +21,16 @@ var CHATBOT = CHATBOT || {};
 
         qaObj = parsedData;
 
-        addQuestionAnswer(null, qaObj.questions[index]);
+        setTimeout(() => {
+            homeScreenContainer.style.display = "none";
+            chatAreaContainer.classList.add("fade-in");
+            inputArea.classList.add("fade-in");
+        }, 3*1000);
+
+        setTimeout(() => {
+            addQuestionAnswer(null, qaObj.questions[index]);
+        }, 5*1000);
+
     }
 
 
@@ -52,7 +63,7 @@ var CHATBOT = CHATBOT || {};
 
             setTimeout(() => {
                 addQuestionAnswer(null, qaObj.questions[index]);
-            }, 1000);
+            }, 2000);
         }
         else if ( typeof parseInt(inputVal) === "number" && !isNaN(inputVal) && index === 1 ) {
 
@@ -67,7 +78,7 @@ var CHATBOT = CHATBOT || {};
 
                         setTimeout(() => {
                             addQuestionAnswer(null, eachReply)
-                        }, (idx+1)*1000);
+                        }, (idx+1)*2000);
                     });
             }
             else if ( noOfWashes >= recommendedWashes && hairCondition === "oily" ) {
@@ -79,7 +90,7 @@ var CHATBOT = CHATBOT || {};
 
                         setTimeout(() => {
                             addQuestionAnswer(null, eachReply)
-                        }, (idx+1)*1000);
+                        }, (idx+1)*2000);
                     });
             }
 
@@ -90,12 +101,12 @@ var CHATBOT = CHATBOT || {};
 
                     setTimeout(() => {
                         addQuestionAnswer(null, eachReply)
-                    }, (optionalReplyArray.length+1)*1000);
+                    }, (optionalReplyArray.length+1)*2000);
                 });
             washCheckMediaType === "carousel" && setTimeout(() => {
 
                 addQuestionAnswer(null, null, washCheckMediaType, washCheckMediaLinks);
-            }, (optionalReplyArray.length+replyArrayForWashCheck.length+2)*1000);
+            }, (optionalReplyArray.length+replyArrayForWashCheck.length+2)*2000);
 
         }
         else if ( typeof answerValue === "object" ) {
@@ -115,19 +126,19 @@ var CHATBOT = CHATBOT || {};
 
                     setTimeout(() => {
                         addQuestionAnswer(null, eachReply)
-                    }, (idx+1)*1000);
+                    }, (idx+1)*2000);
                 });
 
             type === "video" && setTimeout(() => {
 
                     addQuestionAnswer(null, null, type, link);
-                }, (replyArray.length+1)*1000);
+                }, (replyArray.length+1)*2000);
         }
         else {
 
             setTimeout(() => {
                 addQuestionAnswer(null, other);
-            }, 1000);
+            }, 2000);
 
             setTimeout(() => {
                 addQuestionAnswer(null, qaObj.questions[index]);

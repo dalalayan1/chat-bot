@@ -22,20 +22,22 @@ const CHATBOT_OBJ = {
     domELementCreator: function(elementObj) {
 
         const { tag, attrs, children, innerText, innerHTML } = elementObj;
+        let newEle = document.createElement(tag);
 
-
-        var newEle = document.createElement(tag);
         if(attrs) {
             for(var key in attrs) {
                 newEle.setAttribute(key, attrs[key]);
             }
         }
+
         if(innerText) {
             newEle.innerText = innerText;
         }
+
         if(innerHTML) {
             newEle.innerHTML = innerHTML;
         }
+        
         if(children && children.length) {
             children.forEach((child) => {
                 var childElement = domELementCreator(child);
@@ -63,9 +65,8 @@ const CHATBOT_OBJ = {
 }
 
 
-var CHATBOT = CHATBOT || {};
 const { domTraverser, domELementCreator, fetchData, showSlides } = CHATBOT_OBJ;
-CHATBOT = {
+var CHATBOT = CHATBOT || {
     domTraverser,
     domELementCreator,
     fetchData,
