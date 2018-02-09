@@ -10,7 +10,7 @@ body {
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url('img/conversationWithOutText.jpg');
+    background-image: url('../img/conversationWithOutText.jpg');
 }
 .chat-area {
     max-height: 80vh;
