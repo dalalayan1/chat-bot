@@ -13,7 +13,7 @@
         createElementsObj,
         createdElements;
 
-    sendBtn.addEventListener("click", addQuestionAnswer);
+    inputArea.addEventListener("submit",addQuestionAnswer);
 
     function getJSONdata(data) {
 
@@ -25,6 +25,7 @@
             homeScreenContainer.style.display = "none";
             chatAreaContainer.classList.add("fade-in");
             inputArea.classList.add("fade-in");
+            inputMsg.focus();
         }, 3*1000);
 
         setTimeout(() => {
@@ -149,7 +150,6 @@
 
 
     function addQuestionAnswer(evt, text, type, link) {
-
         if ( evt ) {
             evt.preventDefault();
         }
