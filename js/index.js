@@ -77,7 +77,7 @@
                         eachReply = eachReply.replace('{number}',noOfWashes).replace('{hairCondition}',hairCondition);
 
                         setTimeout(() => {
-                            addQuestionAnswer(null, eachReply)
+                            addQuestionAnswer(null, eachReply);
                         }, (idx+1)*1500);
                     });
             }
@@ -341,7 +341,7 @@
     }
 
 
-    fetchData('QnA.json', getJSONdata);
+    fetchData('data/QnA.json', getJSONdata);
 
 
 })();
