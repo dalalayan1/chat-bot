@@ -41,6 +41,6 @@
                 ]
             }
         },
-        "other": "I'm sorry I didn't get that"
+        "defaultReply": "I'm sorry I didn't get that"
     }
 }

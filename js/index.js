@@ -23,12 +23,15 @@
 
     inputArea.addEventListener("submit",addQuestionAnswer);
 
-    function getJSONdata(data) {
+    /**
+     * processJSONdata - callback after data-fetch, takes further steps like asking question to user 
+     * @param {object} data - parsed data after fetch
+     */
+    function processJSONdata(data) {
 
-        const parsedData = JSON.parse(data);
+        qaObj = data;
 
-        qaObj = parsedData;
-
+        // removes home screen and brings in the next screen after 3s
         setTimeout(() => {
             homeScreenContainer.style.display = "none";
             chatAreaContainer.classList.add("fade-in");
@@ -42,7 +45,10 @@
 
     }
 
-
+    /**
+     * processInput - takes the input value and processes the next output 
+     * @param {string} inputVal - value of input
+     */
     function processInput(inputVal){
 
         const {
@@ -57,7 +63,7 @@
                             link: washCheckMediaLinks
                         }
                     } = {},
-                    other
+                    defaultReply
                 } = {},
                 answers
             } = qaObj,
@@ -143,10 +149,11 @@
                     addQuestionAnswer(null, null, type, link);
                 }, (replyArray.length+1)*1500);
         }
+        // asks default question
         else {
 
             setTimeout(() => {
-                addQuestionAnswer(null, other);
+                addQuestionAnswer(null, defaultReply);
             }, 1500);
 
             setTimeout(() => {
@@ -156,7 +163,13 @@
         
     }
 
-
+    /**
+     * addQuestionAnswer - adds question/answer blocks in chat area
+     * @param {object} evt - event object
+     * @param {string} text - question string
+     * @param {string} type - type of media
+     * @param {string/array} link - media links
+     */
     function addQuestionAnswer(evt, text, type, link) {
 
 
@@ -353,6 +366,10 @@
         
     }
 
+    /**
+     * fetchCityandWeather - calls api to fetch cityname and temperature
+     * @param {function} - callback to add another fetch call
+     */
     fetchCityandWeather(function(resp){
 
         const {
@@ -360,12 +377,12 @@
                 temp
             } = {},
             name
-        } = JSON.parse(resp);
+        } = resp;
 
         temperature = temp;
         cityName = name;
 
-        fetchData('data/QnA.json', getJSONdata);
+        fetchData('data/QnA.json', processJSONdata);
 
     });
 
