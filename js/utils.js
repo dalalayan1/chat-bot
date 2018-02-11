@@ -70,11 +70,17 @@ const CHATBOT_OBJ = {
      * fetchCityandWeather - performs ajax call to fetch location data
      * @param {function} callback - callback which gets triggered of data fetch success
      */
-    fetchCityandWeather: function(callback) {
+    fetchCityandWeather: function(callbackSuccess, callbackError) {
+
         navigator.geolocation.getCurrentPosition(function(position) {
 			url = "http://api.openweathermap.org/data/2.5/weather?lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&units=metric&APPID=d677437bdfcc77537e197a05bed652ab"
-			fetchData(url, callback);
-		});
+			fetchData(url, callbackSuccess);
+        },
+        function(err) {
+            alert('Error: ' + err.message);
+            console.error('Error: ', err.message);
+            callbackError();
+        });
     },
 
     /**

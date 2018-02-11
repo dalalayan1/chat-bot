@@ -179,7 +179,7 @@
 
         if ( text ) {
 
-            text = text.replace('{temperature}', temperature).replace('{cityName}', cityName);
+            text = temperature && cityName ? text.replace('{temperature}', temperature).replace('{cityName}', cityName) : text;
             
             createElementsObj = {
                     tag: "div",
@@ -384,6 +384,9 @@
 
         fetchData('data/QnA.json', processJSONdata);
 
+    },
+    function(){
+        fetchData('data/QnA.json', processJSONdata);
     });
 
 
