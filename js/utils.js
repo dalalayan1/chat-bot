@@ -45,11 +45,17 @@ const CHATBOT_OBJ = {
         xobj.onreadystatechange = function () {
             if (xobj.readyState == 4 && xobj.status == "200") {
                 callback(xobj.responseText);
-                startChat = callback;
-                qaObj = JSON.parse(xobj.responseText);
             }
         };
         xobj.send(null);
+    },
+
+    fetchCityandWeather: function(callback) {
+        debugger
+        navigator.geolocation.getCurrentPosition(function(position) {
+			url = "http://api.openweathermap.org/data/2.5/weather?lat="+position.coords.latitude+"&lon="+position.coords.longitude+"&units=metric&APPID=d677437bdfcc77537e197a05bed652ab"
+			fetchData(url, callback);
+		});
     },
 
     scrollToBottom: function(elementArray) {
@@ -72,11 +78,12 @@ const CHATBOT_OBJ = {
 }
 
 
-const { domTraverser, domELementCreator, fetchData, scrollToBottom, showSlides } = CHATBOT_OBJ;
+const { domTraverser, domELementCreator, fetchData, fetchCityandWeather, scrollToBottom, showSlides } = CHATBOT_OBJ;
 var CHATBOT = CHATBOT || {
     domTraverser,
     domELementCreator,
     fetchData,
+    fetchCityandWeather,
     showSlides,
     scrollToBottom
 };

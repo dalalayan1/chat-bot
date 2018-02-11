@@ -1,6 +1,12 @@
 'use strict';
 (function () {
-    const { domTraverser, domELementCreator, fetchData, scrollToBottom, showSlides } = CHATBOT,
+    const { domTraverser,
+            domELementCreator,
+            fetchData,
+            fetchCityandWeather,
+            scrollToBottom,
+            showSlides
+        } = CHATBOT,
         homeScreenContainer = domTraverser("homeScreenContainer"),
         chatAreaContainer = domTraverser("chatAreaContainer"),
         chatArea = domTraverser("chatArea"),
@@ -11,7 +17,9 @@
         qaObj,
         slideIndex,
         createElementsObj,
-        createdElements;
+        createdElements,
+        temperature,
+        cityName;
 
     inputArea.addEventListener("submit",addQuestionAnswer);
 
@@ -150,11 +158,16 @@
 
 
     function addQuestionAnswer(evt, text, type, link) {
+
+
         if ( evt ) {
             evt.preventDefault();
         }
 
         if ( text ) {
+
+            text = text.replace('{temperature}', temperature).replace('{cityName}', cityName);
+            
             createElementsObj = {
                     tag: "div",
                     attrs: {
@@ -340,8 +353,21 @@
         
     }
 
+    fetchCityandWeather(function(resp){
 
-    fetchData('data/QnA.json', getJSONdata);
+        const {
+            main: {
+                temp
+            } = {},
+            name
+        } = JSON.parse(resp);
+
+        temperature = temp;
+        cityName = name;
+
+        fetchData('data/QnA.json', getJSONdata);
+
+    });
 
 
 })();
