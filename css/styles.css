@@ -16,7 +16,7 @@ body {
     background-image: url('../img/home.jpg');
 }
 .chatarea-container {
-    background-image: url('../img/conversationWithOutText.jpg');
+    background-image: url('../img/conversationWithoutText.jpg');
     opacity: 0;
     transition: opacity 3000ms;
 }
